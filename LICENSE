@@ -22,20 +22,3 @@ SOFTWARE.
 
 
 
-@RegisterModule(name = "SmoothLook", description = "Looks at blocks smoothly", category = Module.Category.MISC)
-public class ModuleSmoothLook extends Module {
-    @Override
-    public void onTick() {
-        if (!(mc.crosshairTarget instanceof BlockHitResult hit)) return;
-
-        Vec3d eye = mc.player.getEyePos();
-        Vec3d center = Vec3d.ofCenter(hit.getBlockPos());
-        Vec3d diff = center.subtract(eye);
-
-        float tyaw = (float) MathHelper.wrapDegrees(Math.toDegrees(Math.atan2(diff.z, diff.x)) - 90);
-        float tpitch = (float) -Math.toDegrees(Math.atan2(diff.y, Math.sqrt(diff.x * diff.x + diff.z * diff.z)));
-
-        mc.player.setYaw(MathHelper.lerp(0.2f, mc.player.getYaw(), tyaw));
-        mc.player.setPitch(MathHelper.lerp(0.2f, mc.player.getPitch(), tpitch));
-    }
-}
